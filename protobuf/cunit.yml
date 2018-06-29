@@ -1,0 +1,13 @@
+name: protobuf
+repository: 
+  url: https://github.com/google/protobuf.git
+
+cmake:
+  root: cmake  
+  flags:
+    CMAKE_BUILD_TYPE: Release
+    protobuf_BUILD_TESTS: OFF
+    protobuf_BUILD_EXAMPLES: OFF
+    protobuf_WITH_ZLIB: OFF
+    BUILD_SHARED_LIBS: OFF
+    protobuf_BUILD_SHARED_LIBS: OFF
