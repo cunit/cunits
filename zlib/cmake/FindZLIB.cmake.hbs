@@ -1,0 +1,12 @@
+
+if (NOT TARGET ZLIB::ZLIB) 
+    add_library(ZLIB::ZLIB STATIC IMPORTED)
+    set_target_properties(ZLIB::ZLIB PROPERTIES
+        IMPORTED_LOCATION {{cunitLibDir}}/libz.a
+    )
+    set(ZLIB_LIBRARY {{cunitLibDir}}/libz.a)
+    set(ZLIB_LIBRARIES {{cunitLibDir}}/libz.a)
+    set(ZLIB_INCLUDE {{cunitIncludeDir}})
+    set(ZLIB_INCLUDE_DIRS {{cunitIncludeDir}})
+    set(ZLIB_FOUND true)
+endif()

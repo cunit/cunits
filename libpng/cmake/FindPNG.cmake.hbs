@@ -1,0 +1,9 @@
+
+if (NOT TARGET libpng::libpng) 
+    add_library(libpng::libpng STATIC IMPORTED)
+    set(LIBPNG_LIBRARIES {{cunitLibDir}}/libpng.a)
+    set_target_properties(libpng::libpng PROPERTIES
+        IMPORTED_LOCATION {{cunitLibDir}}/libpng.a
+    )
+    set(libpng_FOUND true)
+endif()

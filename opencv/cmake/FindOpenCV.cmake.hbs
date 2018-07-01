@@ -1,0 +1,22 @@
+
+set(_OpenCV_LIBS 
+    calib3d features2d flann highgui imgcodecs
+    imgproc ml objdetect photo shape stitching superres
+    video videoio videostab core
+    )
+
+
+foreach(_lib ${_OpenCV_LIBS})    
+    set(_target OpenCV::${_lib})    
+    set(_libPath {{cunitLibDir}}/libopencv_${_lib}.a)
+    list(APPEND OpenCV_LIBRARIES ${_libPath})
+    list(APPEND OpenCV_ALL ${_target})
+    if (NOT TARGET ${_target}) 
+        add_library(${_target} STATIC IMPORTED)
+        set_target_properties(${_target} PROPERTIES
+            IMPORTED_LOCATION ${_libPath}
+        )
+    endif()
+endforeach()
+
+set(OpenCV_FOUND true)

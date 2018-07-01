@@ -1,0 +1,14 @@
+name: libpng
+repository: 
+  url: git://git.code.sf.net/p/libpng/code
+
+cmake:
+  flags:
+    CMAKE_BUILD_TYPE: Release
+    BUILD_SHARED_LIBS: OFF
+    PNG_TESTS: OFF
+    PNG_SHARED: OFF
+  findTemplate: cmake/FindPNG.cmake.hbs
+    
+dependencies:
+  zlib: v1.2.11

@@ -1,0 +1,12 @@
+name: libjpeg
+repository: 
+  url: https://github.com/LuaDist/libjpeg.git
+
+cmake:
+  flags:
+    CMAKE_BUILD_TYPE: Release
+    BUILD_SHARED_LIBS: OFF
+  findTemplate: cmake/FindJPEG.cmake.hbs
+
+dependencies:
+  zlib: 1.2.11

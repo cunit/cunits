@@ -1,0 +1,13 @@
+name: libtiff
+repository: 
+  url: https://gitlab.com/libtiff/libtiff
+
+cmake:
+  flags:
+    CMAKE_BUILD_TYPE: Release
+    BUILD_SHARED_LIBS: OFF
+    lzma: OFF
+  findTemplate: cmake/FindTIFF.cmake.hbs
+
+dependencies:
+  zlib: 1.2.11
