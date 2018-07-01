@@ -7,6 +7,7 @@ cmake:
     CMAKE_BUILD_TYPE: Release
     BUILD_SHARED_LIBS: OFF
     lzma: OFF
+    jbig: OFF
   findTemplate: cmake/FindTIFF.cmake.hbs
 
 dependencies:
