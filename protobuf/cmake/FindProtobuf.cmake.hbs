@@ -1,0 +1,8 @@
+
+if (NOT TARGET Protobuf::Protobuf) 
+    add_library(Protobuf::Protobuf STATIC IMPORTED)
+    set_target_properties(Protobuf::Protobuf PROPERTIES
+        IMPORTED_LOCATION {{cunitLibDir}}/libprotobuf.a
+    )
+    set(Protobuf_FOUND true)
+endif()

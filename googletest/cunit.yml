@@ -1,0 +1,7 @@
+name: googletest
+repository: 
+  url: https://github.com/google/googletest.git
+
+cmake:
+  flags:
+    CMAKE_BUILD_TYPE: Release
