@@ -37,6 +37,7 @@ cmake:
     WITH_PTHREADS_PF: OFF
     WITH_V4L: OFF
     WITH_WEBP: OFF
+    WITH_TIFF: OFF
   findTemplate: cmake/FindOpenCV.cmake.hbs
 
 dependencies:
