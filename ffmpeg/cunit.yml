@@ -1,0 +1,16 @@
+name: ffmpeg
+repository: 
+  url: https://github.com/ffmpeg/ffmpeg.git
+
+buildType: manual
+build:
+  configure:
+    file: scripts/configure.sh
+  build:
+    script: make -j${CUNIT_PROC_COUNT}
+  install:
+    script: make -j${CUNIT_PROC_COUNT} install
+
+cmake:
+  findTemplate: cmake/FindFFMPEG.cmake.hbs
+
