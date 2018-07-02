@@ -20,7 +20,6 @@ ARCH=
 HOST_OS=$(tolower $(uname -s))
 TARGET_OS=${HOST_OS}
 if [ "${CMAKE_SYSROOT}" != "" ]; then
-    echo "CROSS COMPILING"
     CROSS_COMPILING=1
     CC=${CMAKE_C_COMPILER}
     CXX=${CMAKE_CXX_COMPILER}
