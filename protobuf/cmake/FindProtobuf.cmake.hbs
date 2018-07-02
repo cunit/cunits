@@ -2,6 +2,7 @@
 if (NOT TARGET Protobuf::Protobuf) 
     add_library(Protobuf::Protobuf STATIC IMPORTED)
     set(PROTOBUF_LIBRARY {{cunitLibDir}}/libprotobuf.a)
+    set(Protobuf_LIBRARIES ${PROTOBUF_LIBRARY})
     set(Protobuf_LIBRARY ${PROTOBUF_LIBRARY})
     set(PROTOBUF_INCLUDE_DIR {{cunitIncludeDir}})
     set(Protobuf_INCLUDE_DIR {{cunitIncludeDir}})

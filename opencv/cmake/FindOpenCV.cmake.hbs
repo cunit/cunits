@@ -10,7 +10,7 @@ foreach(_lib ${_OpenCV_LIBS})
     set(_target OpenCV::${_lib})    
     set(_libPath {{cunitLibDir}}/libopencv_${_lib}.a)
     list(APPEND OpenCV_LIBRARIES ${_libPath})
-    list(APPEND OpenCV_ALL ${_target})
+    list(APPEND OpenCV_TARGETS ${_target})
     if (NOT TARGET ${_target}) 
         add_library(${_target} STATIC IMPORTED)
         set_target_properties(${_target} PROPERTIES

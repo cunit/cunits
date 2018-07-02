@@ -1,12 +1,14 @@
 
-if (NOT TARGET Protobuf::Protobuf) 
-    add_library(Protobuf::Protobuf STATIC IMPORTED)
-    set(PROTOBUF_LIBRARY {{cunitLibDir}}/libprotobuf.a)
-    set(Protobuf_LIBRARY ${PROTOBUF_LIBRARY})
-    set(PROTOBUF_INCLUDE_DIR {{cunitIncludeDir}})
-    set(Protobuf_INCLUDE_DIR {{cunitIncludeDir}})
-    set_target_properties(Protobuf::Protobuf PROPERTIES
-        IMPORTED_LOCATION ${PROTOBUF_LIBRARY}
-    )
-    set(Protobuf_FOUND true)
-endif()
+foreach(_avlib avcodec avformat avdevice avutil avfilter swscale postproc swresample)
+    set(_libname lib${_avlib})
+    set(_lib {{cunitLibDir}}/${_libname}.a)
+    set(_target FFMPEG::${_libname})
+    if(EXISTS ${_lib} AND NOT TARGET ${_target})
+        list(APPEND FFMPEG_LIBRARIES ${_lib})
+        list(APPEND FFMPEG_TARGETS ${_target})
+        add_library(${_target} STATIC IMPORTED)
+        set_target_properties(${_target} PROPERTIES IMPORTED_LOCATION ${_lib})
+    endif()
+endforeach()
+
+set(FFMPEG_FOUND true)
