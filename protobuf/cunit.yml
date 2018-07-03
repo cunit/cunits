@@ -13,4 +13,6 @@ cmake:
     protobuf_BUILD_SHARED_LIBS: OFF
     protobuf_BUILD_PROTOC_BINARIES: OFF
   findTemplate: cmake/FindProtobuf.cmake.hbs
+  toolTemplate: cmake/FindToolProtobuf.cmake.hbs
 
+  

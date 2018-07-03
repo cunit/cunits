@@ -1,0 +1,42 @@
+if (NOT TOOL_Protobuf)
+
+  # PROTOC EXE
+  set(PROTOC_EXE {{cunitRootDir}}/bin/protoc)
+
+  # FUNCTION: PROTOC - make protobufs
+  function(PROTOC GEN_CPP_DIR OUT_CPP_SRC)
+    set(PROTO_SRC ${ARGN})
+    list(LENGTH PROTO_SRC _FILE_COUNT)
+    if (_FILE_COUNT EQUAL 0)
+      message(FATAL_ERROR "At least one file must exist")
+    endif ()
+
+    list(GET PROTO_SRC 0 _FIRST_FILE)
+    
+    get_filename_component(_PROTO_DIR ${_FIRST_FILE} DIRECTORY)
+    get_filename_component(_PROTO_DIR ${_PROTO_DIR} ABSOLUTE)
+    
+    # ENSURE ABSOLUTE PATHS
+    foreach (_SRC_FILE ${PROTO_SRC})
+      get_filename_component(_REAL_SRC_FILE ${_SRC_FILE} ABSOLUTE)
+      list(APPEND _REAL_PROTO_SRC ${_REAL_SRC_FILE})
+    endforeach ()
+
+    string(REPLACE ".proto" ".pb.cc" PROTO_CPP_SRCS "${_REAL_PROTO_SRC}")
+    string(REPLACE ".proto" ".pb.h" PROTO_HEADER_SRCS "${_REAL_PROTO_SRC}")
+    string(REPLACE "${_PROTO_DIR}" "${GEN_CPP_DIR}" PROTO_CPP_SRCS "${PROTO_CPP_SRCS}")
+    string(REPLACE "${_PROTO_DIR}" "${GEN_CPP_DIR}" PROTO_HEADER_SRCS "${PROTO_HEADER_SRCS}")
+
+    if (NOT EXISTS ${GEN_CPP_DIR})
+      file(MAKE_DIRECTORY ${GEN_CPP_DIR})
+    endif ()
+
+    execute_process(COMMAND ${PROTOC_EXE} --cpp_out=${GEN_CPP_DIR} -I${_PROTO_DIR} ${PROTO_SRC})
+    
+    set_property(SOURCE ${PROTO_CPP_SRCS} PROPERTY SKIP_AUTOGEN ON)
+    set(${OUT_CPP_SRC} ${PROTO_CPP_SRCS} PARENT_SCOPE)
+
+  endfunction(PROTOC)
+
+  set(TOOL_Protobuf TRUE)
+endif ()
