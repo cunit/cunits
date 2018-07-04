@@ -8,6 +8,7 @@ cmake:
     CMAKE_BUILD_TYPE: Release
     CMAKE_C_FLAGS: -fPIC -fPIE
     CMAKE_CXX_FLAGS: -fPIC -fPIE
+    CMAKE_POSITION_INDEPENDENT_CODE: ON
     protobuf_BUILD_TESTS: OFF
     protobuf_BUILD_EXAMPLES: OFF
     protobuf_WITH_ZLIB: OFF
