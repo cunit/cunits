@@ -6,6 +6,7 @@ cmake:
   root: cmake  
   flags:
     CMAKE_BUILD_TYPE: Release
+    CMAKE_C_FLAGS: -fPIC -fPIE
     protobuf_BUILD_TESTS: OFF
     protobuf_BUILD_EXAMPLES: OFF
     protobuf_WITH_ZLIB: OFF
