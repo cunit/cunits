@@ -1,0 +1,11 @@
+
+if (NOT JBIG_FOUND) 
+    add_library(JBIG::JBIG STATIC IMPORTED)
+    set(JBIG_LIBRARY {{cunitLibDir}}/libjbig.a)
+    set(JBIG_LIBRARIES {{cunitLibDir}}/libjbig.a)
+    set_target_properties(JBIG::JBIG PROPERTIES
+        IMPORTED_LOCATION ${JBIG_LIBRARY}
+    )
+    
+    set(JBIG_FOUND true)
+endif()

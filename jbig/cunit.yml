@@ -1,0 +1,16 @@
+name: jbig
+repository: 
+  url: https://www.cl.cam.ac.uk/~mgk25/git/jbigkit
+
+buildType: manual
+build:
+  configure:
+    script:  gsed -i 's/CC = gcc/CC ?= gcc/g' Makefile && cd libjbig &&  gsed -i 's/CC = gcc/CC ?= gcc/g' Makefile && cd ..
+  build:
+    script: pwd && make -j${CUNIT_PROC_COUNT} lib
+  install:
+    script: cp libjbig/libjbig.a ${CUNIT_BUILD_LIB}/
+
+cmake:
+  findTemplate: cmake/FindJBIG.cmake.hbs
+

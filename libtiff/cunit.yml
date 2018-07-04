@@ -8,7 +8,14 @@ cmake:
     BUILD_SHARED_LIBS: OFF
     lzma: OFF
     jbig: OFF
+    JBIG_SUPPORT: O
+    # JBIG_NAMES: libjbig.a
+    # JBIG_LIBRARIES: /projects/mapper-datacapture/capture/.cunit/ifc6640_debug/root/lib/libjbig.a
+    # JBIG_LIBRARY: /projects/mapper-datacapture/capture/.cunit/ifc6640_debug/root/lib/libjbig.a
+    # JBIG_INCLUDE_DIR: ./../root/include
+    # CMAKE_LIBRARY_PATH: ./../root/lib
   findTemplate: cmake/FindTIFF.cmake.hbs
 
 dependencies:
   zlib: 1.2.11
+  jbig: 2.1
