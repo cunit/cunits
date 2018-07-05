@@ -7,7 +7,7 @@ build:
   configure:
     script:  gsed -i 's/CC = gcc/CC ?= gcc/g' Makefile && cd libjbig &&  gsed -i 's/CC = gcc/CC ?= gcc/g' Makefile && cd ..
   build:
-    script: pwd && make -j${CUNIT_PROC_COUNT} lib
+    script: cd libjbig && make -j${CUNIT_PROC_COUNT} libjbig.a
   install:
     script: cp libjbig/libjbig.a ${CUNIT_BUILD_LIB}/
 

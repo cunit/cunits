@@ -41,7 +41,8 @@ cmake:
   findTemplate: cmake/FindOpenCV.cmake.hbs
 
 dependencies:
-  libtiff: Release-v4-0-9
+  # libtiff: Release-v4-0-9
   zlib: v1.2.11
   libpng: v1.6.33
   libjpeg: 8.4.0
+  jbig: 2.1
