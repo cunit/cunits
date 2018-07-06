@@ -1,0 +1,7 @@
+
+if (NOT YAMLCPP_FOUND) 
+    add_library(YAMLCPP::YAMLCPP STATIC IMPORTED)
+    set(YAMLCPP_LIBRARIES {{cunitLibDir}}/libyaml-cpp.a)
+    set_target_properties(YAMLCPP::YAMLCPP PROPERTIES IMPORTED_LOCATION ${YAMLCPP_LIBRARIES})
+    set(YAMLCPP_FOUND true)
+endif()

@@ -1,0 +1,9 @@
+name: pugixml
+repository: 
+  url: https://github.com/zeux/pugixml.git
+
+cmake:
+  flags:
+    CMAKE_BUILD_TYPE: Release
+    BUILD_SHARED_LIBS: OFF
+  findTemplate: cmake/FindPUGIXML.cmake.hbs

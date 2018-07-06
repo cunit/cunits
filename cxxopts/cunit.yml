@@ -1,0 +1,9 @@
+name: cxxopts
+repository: 
+  url: https://github.com/jarro2783/cxxopts.git
+
+cmake:
+  flags:
+    CMAKE_BUILD_TYPE: Release
+  findTemplate: cmake/FindCXXOPTS.cmake.hbs
+    

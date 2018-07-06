@@ -1,0 +1,7 @@
+
+if (NOT PUGIXML_FOUND) 
+    add_library(PUGIXML::PUGIXML STATIC IMPORTED)
+    set(PUGIXML_LIBRARIES {{cunitLibDir}}/libpugixml.a)
+    set_target_properties(PUGIXML::PUGIXML PROPERTIES IMPORTED_LOCATION ${PUGIXML_LIBRARIES})
+    set(PUGIXML_FOUND true)
+endif()

@@ -1,0 +1,9 @@
+name: yamlcpp
+repository: 
+  url: https://github.com/jbeder/yaml-cpp.git
+
+cmake:
+  flags:
+    CMAKE_BUILD_TYPE: Release
+    BUILD_SHARED_LIBS: OFF
+  findTemplate: cmake/FindYAMLCPP.cmake.hbs
