@@ -2,25 +2,23 @@ name: libtiff
 repository: 
   url: https://gitlab.com/libtiff/libtiff
 
-buildType: manual
-build:
-  configure:
-    file: scripts/configure.sh
-  build:
-    script: make -j${CUNIT_PROC_COUNT}
-  install:
-    script: make -j${CUNIT_PROC_COUNT} install
+# buildType: manual
+# build:
+#   configure:
+#     file: scripts/configure.sh
+#   build:
+#     script: make -j${CUNIT_PROC_COUNT}
+#   install:
+#     script: make -j${CUNIT_PROC_COUNT} install
 
 cmake:
-  # flags:
-  #   CMAKE_BUILD_TYPE: Release
-  #   BUILD_SHARED_LIBS: OFF
-  #   lzma: OFF
-  #   jbig: ON
-  #   TIFF_SIZE_T: "unsigned long"
-  #   JBIG_NAMES: libjbig.a
-  #   JBIG_LIBRARIES: /projects/mapper-datacapture/capture/.cunit/ifc6640_debug/root/lib/libjbig.a
-  #   JBIG_LIBRARY: /projects/mapper-datacapture/capture/.cunit/ifc6640_debug/root/lib/libjbig.a
+  flags:
+    CMAKE_BUILD_TYPE: Release
+    BUILD_SHARED_LIBS: OFF
+    lzma: OFF
+    jbig: ON
+    TIFF_SIZE_T: "unsigned long"
+    JBIG_NAMES: libjbig.a
   findTemplate: cmake/FindTIFF.cmake.hbs
 
 dependencies:

@@ -1,5 +1,6 @@
 if(NOT FFMPEG_FOUND)
-    foreach(_avlib avcodec avformat avdevice avutil avfilter swscale postproc swresample)
+    #postproc
+    foreach(_avlib  avformat avcodec avdevice avfilter avutil swscale swresample)
         set(_libname lib${_avlib})
         set(_lib {{cunitLibDir}}/${_libname}.a)
         set(_target FFMPEG::${_libname})
