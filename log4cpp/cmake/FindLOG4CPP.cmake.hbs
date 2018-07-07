@@ -1,0 +1,7 @@
+
+if (NOT LOG4CPP_FOUND) 
+    add_library(LOG4CPP::LOG4CPP STATIC IMPORTED)
+    set(LOG4CPP_LIBRARIES {{cunitLibDir}}/liblog4cpp.a)
+    set_target_properties(LOG4CPP::LOG4CPP PROPERTIES IMPORTED_LOCATION ${LOG4CPP_LIBRARIES})
+    set(LOG4CPP_FOUND true)
+endif()

@@ -1,0 +1,9 @@
+name: log4cpp
+repository: 
+  url: https://github.com/Signafy/log4cpp.git
+
+cmake:
+  flags:
+    CMAKE_BUILD_TYPE: Release
+    BUILD_SHARED_LIBS: OFF
+  findTemplate: cmake/FindLOG4CPP.cmake.hbs

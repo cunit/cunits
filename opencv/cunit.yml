@@ -5,6 +5,10 @@ repository:
 cmake:
   flags:
     CMAKE_BUILD_TYPE: Release
+    BUILD_ANDROID_EXAMPLES: OFF
+    BUILD_ANDROID_SERVICE: OFF
+    BUILD_ANDROID_PROJECTS: OFF
+    ANDROID_EXAMPLES_WITH_LIBS: OFF
     BUILD_SHARED_LIBS: OFF
     BUILD_JPEG: OFF
     BUILD_JASPER: OFF
@@ -40,9 +44,13 @@ cmake:
     WITH_TIFF: OFF
   findTemplate: cmake/FindOpenCV.cmake.hbs
 
+systems:
+  android:
+    cmake:
+      flags:
+        BUILD_JAVA: ON
+
 dependencies:
-  # libtiff: Release-v4-0-9
   zlib: v1.2.11
   libpng: v1.6.33
   libjpeg: 8.4.0
-  jbig: 2.1
