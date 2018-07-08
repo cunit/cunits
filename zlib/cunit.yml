@@ -6,5 +6,6 @@ cmake:
   flags:
     CMAKE_BUILD_TYPE: Release
     BUILD_SHARED_LIBS: OFF
+    CMAKE_DEBUG_POSTFIX: ""
   findTemplate: cmake/FindZLIB.cmake.hbs
 

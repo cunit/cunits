@@ -1,8 +1,8 @@
 
 if (NOT TARGET libtiff::libtiff) 
     add_library(libtiff::libtiff STATIC IMPORTED)
-    set(TIFF_LIBRARY {{cunitLibDir}}/libtiff.a)
-    set(TIFF_LIBRARIES {{cunitLibDir}}/libtiff.a)
+    set(TIFF_LIBRARY {{cunitLibDir}}/${CMAKE_STATIC_LIBRARY_PREFIX}tiff${CMAKE_STATIC_LIBRARY_SUFFIX})
+    set(TIFF_LIBRARIES ${TIFF_LIBRARY})
     set_target_properties(libtiff::libtiff PROPERTIES
         IMPORTED_LOCATION ${TIFF_LIBRARY}
     )

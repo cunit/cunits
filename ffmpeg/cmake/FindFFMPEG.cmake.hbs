@@ -2,7 +2,7 @@ if(NOT FFMPEG_FOUND)
     #postproc
     foreach(_avlib  avformat avcodec avdevice avfilter avutil swscale swresample)
         set(_libname lib${_avlib})
-        set(_lib {{cunitLibDir}}/${_libname}.a)
+        set(_lib {{cunitLibDir}}/${CMAKE_STATIC_LIBRARY_PREFIX}${_avlib}${CMAKE_STATIC_LIBRARY_SUFFIX})
         set(_target FFMPEG::${_libname})
         if(EXISTS ${_lib} AND NOT TARGET ${_target})
             list(APPEND FFMPEG_LIBRARIES ${_lib})

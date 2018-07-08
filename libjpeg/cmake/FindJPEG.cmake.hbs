@@ -1,12 +1,12 @@
 
 if (NOT TARGET libjpeg::libjpeg) 
     add_library(libjpeg::libjpeg STATIC IMPORTED)
-    set(JPEG_LIBRARIES {{cunitLibDir}}/libjpeg.a)
-    set(JPEG_LIBRARY {{cunitLibDir}}/libjpeg.a)
+    set(JPEG_LIBRARIES {{cunitLibDir}}/${CMAKE_STATIC_LIBRARY_PREFIX}jpeg${CMAKE_STATIC_LIBRARY_SUFFIX})    
+
+    
+    set(JPEG_LIBRARY ${JPEG_LIBRARIES})
     set(JPEG_INCLUDE_DIRS {{cunitIncludeDir}})
-    set_target_properties(libjpeg::libjpeg PROPERTIES
-        IMPORTED_LOCATION {{cunitLibDir}}/libjpeg.a
-    )
+    set_target_properties(libjpeg::libjpeg PROPERTIES IMPORTED_LOCATION ${JPEG_LIBRARIES})
     set(libjpeg_FOUND true)
     set(JPEG_FOUND true)
 endif()
