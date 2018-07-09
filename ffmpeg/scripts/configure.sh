@@ -65,8 +65,6 @@ OPTS="--incdir=${CUNIT_BUILD_INCLUDE} \
     --enable-parser=hevc \
     --enable-demuxer=h264 \
     --enable-demuxer=hevc \
-    --enable-gpl \
-    --enable-version3 \
     --disable-programs "
 #--enable-demuxer=mov \
 if [ "${CROSS_COMPILING}" = "1" ]; then
