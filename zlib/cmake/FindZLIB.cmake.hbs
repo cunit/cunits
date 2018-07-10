@@ -1,16 +1,16 @@
 
 if (NOT TARGET ZLIB::ZLIB) 
     if (WIN32)
-        set(ZLIB_LIBRARY {{cunitLibDir}}/zlib${CMAKE_STATIC_LIBRARY_SUFFIX})
+        set(ZLIB_LIBRARY {{cxxpodsLibDir}}/zlib${CMAKE_STATIC_LIBRARY_SUFFIX})
     else()
-        set(ZLIB_LIBRARY {{cunitLibDir}}/${CMAKE_STATIC_LIBRARY_PREFIX}z${CMAKE_STATIC_LIBRARY_SUFFIX})
+        set(ZLIB_LIBRARY {{cxxpodsLibDir}}/${CMAKE_STATIC_LIBRARY_PREFIX}z${CMAKE_STATIC_LIBRARY_SUFFIX})
     endif()
     set(ZLIB_LIBRARIES ${ZLIB_LIBRARY})
 
     add_library(ZLIB::ZLIB STATIC IMPORTED)
     set_target_properties(ZLIB::ZLIB PROPERTIES IMPORTED_LOCATION ${ZLIB_LIBRARY})
 
-    set(ZLIB_INCLUDE {{cunitIncludeDir}})
-    set(ZLIB_INCLUDE_DIRS {{cunitIncludeDir}})
+    set(ZLIB_INCLUDE {{cxxpodsIncludeDir}})
+    set(ZLIB_INCLUDE_DIRS {{cxxpodsIncludeDir}})
     set(ZLIB_FOUND true)
 endif()

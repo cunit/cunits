@@ -1,4 +1,4 @@
-![logo](https://github.com/cunit/cunit/raw/master/art/logo.png)
+![logo](https://github.com/cxxpods/cxxpods/raw/master/art/logo.png)
 
 # *Protobuf*
 
@@ -9,7 +9,7 @@ Well - using them just got way easy
 
 ## Dependency to a project
 
-in cunit.yml
+in cxxpods.yml
 ```yaml
 dependencies:
     protobuf: 3.1.0
@@ -20,7 +20,7 @@ _Cross compilation has been thoroughly tested too_
 ## As a Tool
 
 
-in cunit.yml
+in cxxpods.yml
 ```yaml
 tools:
     protobuf: 3.1.0

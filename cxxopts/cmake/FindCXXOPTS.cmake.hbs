@@ -1,6 +1,6 @@
 
 if (NOT CXXOPTS_FOUND) 
-    set(CXXOPTS_INCLUDE_DIR {{cunitIncludeDir}})
+    set(CXXOPTS_INCLUDE_DIR {{cxxpodsIncludeDir}})
     add_library(CXXOPTS::CXXOPTS STATIC IMPORTED)
     set_target_properties(CXXOPTS::CXXOPTS PROPERTIES INCLUDE_DIRECTORIES ${CXXOPTS_INCLUDE_DIR})
     set(CXXOPTS_FOUND TRUE)

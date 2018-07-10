@@ -29,8 +29,8 @@ if [ "${CMAKE_SYSROOT}" != "" ]; then
 fi
 
 CFLAGS="-Ofast"
-OPTS="--includedir=${CUNIT_BUILD_INCLUDE} \
-    --libdir=${CUNIT_BUILD_LIB} \
+OPTS="--includedir=${CXXPODS_BUILD_INCLUDE} \
+    --libdir=${CXXPODS_BUILD_LIB} \
     --enable-static \
     --with-pic \
     --disable-lzma"
@@ -47,7 +47,7 @@ if [ "${CROSS_COMPILING}" == "1" ]; then
     # --nm=${CROSS_PREFIX}nm \
     
 
-    LDFLAGS="${LDFLAGS} -Wl,-rpath-link=${CUNIT_BUILD_LIB} -L${CUNIT_BUILD_LIB} -nostdlib -lc -lm -ldl"
+    LDFLAGS="${LDFLAGS} -Wl,-rpath-link=${CXXPODS_BUILD_LIB} -L${CXXPODS_BUILD_LIB} -nostdlib -lc -lm -ldl"
     
 
 fi

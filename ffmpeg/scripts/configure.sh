@@ -46,8 +46,8 @@ if [ "${CMAKE_SYSROOT}" != "" ]; then
 fi
 
 CFLAGS="-Ofast"
-OPTS="--incdir=${CUNIT_BUILD_INCLUDE} \
-    --libdir=${CUNIT_BUILD_LIB} \
+OPTS="--incdir=${CXXPODS_BUILD_INCLUDE} \
+    --libdir=${CXXPODS_BUILD_LIB} \
     --disable-shared \
     --enable-static \
     --enable-pic \
@@ -90,7 +90,7 @@ if [ "${CROSS_COMPILING}" = "1" ]; then
     echo "SYSROOT=${CMAKE_SYSROOT}"
     CFLAGS=" ${CFLAGS} -I${ANDROID_PLATFORM_ROOT}/ -I${CMAKE_SYSROOT}/usr/include -I${CMAKE_SYSROOT}/usr/include/${ANDROID_HEADER_TRIPLE} -I${ANDROID_PLATFORM_ROOT}/include -DANDROID -Dipv6mr_interface=ipv6mr_ifindex -fasm -Wno-psabi -fno-short-enums"
     EXTRA_LD="-L${ANDROID_PLATFORM_ROOT}/usr/lib64"
-    LDFLAGS="${LDFLAGS} -Wl,-rpath-link=${ANDROID_PLATFORM_ROOT}/usr/lib ${EXTRA_LD} -L${ANDROID_PLATFORM_ROOT}/usr/lib  -L${CUNIT_BUILD_LIB} -nostdlib -lm -lc -ldl"
+    LDFLAGS="${LDFLAGS} -Wl,-rpath-link=${ANDROID_PLATFORM_ROOT}/usr/lib ${EXTRA_LD} -L${ANDROID_PLATFORM_ROOT}/usr/lib  -L${CXXPODS_BUILD_LIB} -nostdlib -lm -lc -ldl"
 
     if [ "${ANDROID}" == "1" ]; then
         ANDROID_PLATFORM_PATH=${ANDROID_SYSTEM_LIBRARY_PATH}

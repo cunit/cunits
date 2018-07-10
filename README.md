@@ -1,11 +1,11 @@
-![logo](https://github.com/cunit/cunit/raw/master/art/logo.png)
+![logo](https://github.com/cxxpods/cxxpods/raw/master/art/logo.png)
 
 # c-unit Repository
 
 This is where we keep all those recipes we like
 to chew on so much!
 
-The main project is here [c-unit](https://github.com/cunit/cunit)
+The main project is here [c-unit](https://github.com/cxxpods/cxxpods)
 
 Most recipes are really simple and straight forward,
 however some of the recipes have magic sugar

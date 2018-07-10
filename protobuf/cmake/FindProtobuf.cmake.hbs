@@ -1,12 +1,12 @@
 
 if (NOT TARGET Protobuf::Protobuf) 
     add_library(Protobuf::Protobuf STATIC IMPORTED)
-    set(PROTOBUF_LIBRARY {{cunitLibDir}}/libprotobuf${CMAKE_STATIC_LIBRARY_SUFFIX})
+    set(PROTOBUF_LIBRARY {{cxxpodsLibDir}}/libprotobuf${CMAKE_STATIC_LIBRARY_SUFFIX})
     
     set(Protobuf_LIBRARIES ${PROTOBUF_LIBRARY})
     set(Protobuf_LIBRARY ${PROTOBUF_LIBRARY})
-    set(PROTOBUF_INCLUDE_DIR {{cunitIncludeDir}})
-    set(Protobuf_INCLUDE_DIR {{cunitIncludeDir}})
+    set(PROTOBUF_INCLUDE_DIR {{cxxpodsIncludeDir}})
+    set(Protobuf_INCLUDE_DIR {{cxxpodsIncludeDir}})
     set_target_properties(Protobuf::Protobuf PROPERTIES
         IMPORTED_LOCATION ${PROTOBUF_LIBRARY}
     )
