@@ -1,0 +1,15 @@
+name: eventemitter
+repository: 
+  url: https://github.com/Signafy/cpp-EventEmitter.git
+
+buildType: manual
+build:
+  configure:
+    script: echo "Skip configure for EE"
+  build:
+    script: echo "No build for EE"
+  install:
+    script: cp EventEmitter.hpp ${CXXPODS_BUILD_INCLUDE}/EventEmitter.hpp
+
+cmake:
+  findTemplate: cmake/FindEventEmitter.cmake.hbs

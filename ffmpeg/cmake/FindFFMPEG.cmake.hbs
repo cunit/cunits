@@ -13,17 +13,18 @@ if(NOT FFMPEG_FOUND)
         endif()
     endforeach()
 
-
+    
 
     if(APPLE)
-    
-        foreach(_fw VideoToolbox CoreVideo AudioToolbox CoreAudio CoreFoundation CoreMedia)
+        foreach(_fw VideoToolbox CoreVideo AudioToolbox CoreAudio CoreFoundation CoreMedia Security)
             find_library(${_fw}_lib ${_fw})
             message(STATUS "${_fw}: ${${_fw}_lib}")
             list(APPEND FFMPEG_LIBRARIES ${${_fw}_lib})
         endforeach()
-        list(APPEND FFMPEG_LIBRARIES lzma iconv)
-    
+        list(APPEND FFMPEG_LIBRARIES lzma iconv ssl tls bz2)
+        
+        find_package(ZLIB REQUIRED)
+        list(APPEND FFMPEG_LIBRARIES ${ZLIB_LIBRARY})
     endif()
 endif()
 

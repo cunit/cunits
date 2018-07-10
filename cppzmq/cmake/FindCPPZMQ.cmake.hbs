@@ -1,0 +1,8 @@
+
+if (NOT CPPZMQ_FOUND) 
+    #add_library(CPPZMQ::CPPZMQ STATIC IMPORTED)
+    #set_target_properties(CPPZMQ::CPPZMQ PROPERTIES IMPORTED_LOCATION ${ZMQ_LIBRARY})
+    set(CPPZMQ_INCLUDE {{cxxpodsIncludeDir}})
+    set(CPPZMQ_INCLUDE_DIRS {{cxxpodsIncludeDir}})
+    set(CPPZMQ_FOUND true)
+endif()

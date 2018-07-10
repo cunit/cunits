@@ -11,6 +11,9 @@ tolower(){
 for f in "libavcodec/hevc_mvs.c" "libavcodec/aaccoder.c" "libavcodec/opus_pvq.c";do sed -i -e 's/B0/b0/g' "$f"; done
 
 
+CC=$(which cc)
+CXX=$(which c++)
+
 CROSS_COMPILING=
 SYSROOT=${CMAKE_SYSROOT}
 CROSS_PREFIX=
@@ -19,6 +22,8 @@ ARCH=
 HOST_OS=$(tolower $(uname -s))
 TARGET_OS=${HOST_OS}
 ANDROID=0
+
+env
 
 if [ "${CMAKE_SYSROOT}" != "" ]; then
     CROSS_COMPILING=1
@@ -66,7 +71,10 @@ OPTS="--incdir=${CXXPODS_BUILD_INCLUDE} \
     --enable-parser=hevc \
     --enable-demuxer=h264 \
     --enable-demuxer=hevc \
+    --enable-gpl \
+    --enable-nonfree \
     --disable-programs "
+    
 #--enable-demuxer=mov \
 if [ "${CROSS_COMPILING}" = "1" ]; then
     OPTS="${OPTS} \
@@ -80,7 +88,8 @@ if [ "${CROSS_COMPILING}" = "1" ]; then
      --cxx=${CXX} \
      --strip=${CROSS_PREFIX}strip \
      --ar=${CROSS_PREFIX}ar \
-     --as=${CROSS_PREFIX}gcc"
+     --as=${CROSS_PREFIX}gcc \
+     --extra-libs=-lgcc"
     #   \
     #  --as=${CROSS_PREFIX}gcc"
     #-isystem ${CMAKE_SYSROOT}/usr/include/${ANDROID_HEADER_TRIPLE}
@@ -103,4 +112,4 @@ if [ "${CROSS_COMPILING}" = "1" ]; then
     fi
 fi
 
-./configure ${OPTS} --extra-libs="-lgcc" --extra-cflags="${CFLAGS}" --extra-cxxflags="${CFLAGS}" --extra-ldflags="${LDFLAGS}"
+./configure ${OPTS} --extra-cflags="${CFLAGS}" --extra-cxxflags="${CFLAGS}" --extra-ldflags="${LDFLAGS}"

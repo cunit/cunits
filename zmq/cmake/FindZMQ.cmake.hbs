@@ -1,0 +1,12 @@
+
+if (NOT TARGET ZMQ::ZMQ) 
+    set(ZMQ_LIBRARY {{cxxpodsLibDir}}/${CMAKE_STATIC_LIBRARY_PREFIX}zmq${CMAKE_STATIC_LIBRARY_SUFFIX})
+    set(ZMQ_LIBRARIES ${ZMQ_LIBRARY})
+
+    add_library(ZMQ::ZMQ STATIC IMPORTED)
+    set_target_properties(ZMQ::ZMQ PROPERTIES IMPORTED_LOCATION ${ZMQ_LIBRARY})
+
+    set(ZMQ_INCLUDE {{cxxpodsIncludeDir}})
+    set(ZMQ_INCLUDE_DIRS {{cxxpodsIncludeDir}})
+    set(ZMQ_FOUND true)
+endif()
