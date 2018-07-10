@@ -27,10 +27,11 @@ if [ "${CMAKE_SYSROOT}" != "" ]; then
     CROSS_PREFIX=${CMAKE_CROSS_PREFIX}
     CROSS_SUFFIX=${CMAKE_CROSS_SUFFIX}
     TARGET_OS=$(tolower ${CMAKE_SYSTEM_NAME})
-    ARCH=aarch64
+    
     # ${CMAKE_SYSTEM_PROCESSOR}
     
     if [ "${TARGET_OS}" = "android" ]; then
+        ARCH=aarch64
         # TARGET_OS=linux
         ANDROID=1
         CC=${ANDROID_C_COMPILER}
