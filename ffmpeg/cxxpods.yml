@@ -7,9 +7,9 @@ build:
   configure:
     file: scripts/configure.sh
   build:
-    script: make -j${CXXPODS_PROC_COUNT}
+    script: echo "Building with ${CXXPODS_PROC_COUNT:-4} procs\nBuild logs to /tmp/ffmpeg.log" && make -j${CXXPODS_PROC_COUNT:-4}  > /tmp/ffmpeg.log
   install:
-    script: make -j${CXXPODS_PROC_COUNT} install
+    script: make -j${CXXPODS_PROC_COUNT:-4} install
 
 cmake:
   findTemplate: cmake/FindFFMPEG.cmake.hbs

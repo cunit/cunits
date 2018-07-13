@@ -8,14 +8,11 @@ tolower(){
     echo "$@" | tr ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz
 }
 
-for f in "libavcodec/hevc_mvs.c" "libavcodec/aaccoder.c" "libavcodec/opus_pvq.c";do sed -i -e 's/B0/b0/g' "$f"; done
-
-
-CROSS_COMPILING=
-ANDROID=0
-SYSROOT=${CMAKE_SYSROOT}
 
 if [ "${CMAKE_SYSROOT}" != "" ]; then
+    echo "Using CMake Sysroot: ${CMAKE_SYSROOT}"
+
+    SYSROOT=${CMAKE_SYSROOT}
     CROSS_COMPILING=1
     CROSS_PREFIX=
     CROSS_SUFFIX=
@@ -54,16 +51,21 @@ if [ "${CMAKE_SYSROOT}" != "" ]; then
             CXX=${ANDROID_TOOLCHAIN_PREFIX}g++
         fi
     fi
+else
+    echo "Host compile"
 fi
 
 # NORMAL, COMMON OPTIONS
-CFLAGS="-Ofast"
+
 OPTS="--incdir=${CXXPODS_BUILD_INCLUDE} \
-    --libdir=${CXXPODS_BUILD_LIB} \
-    --disable-programs "
+    --libdir=${CXXPODS_BUILD_LIB} "
     
 # CHECK IF CROSS-COMPILING
 if [ "${CROSS_COMPILING}" = "1" ]; then
+    CFLAGS="-Ofast"
+
+    for f in "libavcodec/hevc_mvs.c" "libavcodec/aaccoder.c" "libavcodec/opus_pvq.c";do sed -i -e 's/B0/b0/g' "$f"; done
+
     echo "Cross-Compiling: ${ARCH}"
     echo "SYSROOT=${CMAKE_SYSROOT}"
 
@@ -96,7 +98,8 @@ if [ "${CROSS_COMPILING}" = "1" ]; then
      --strip=${CROSS_PREFIX}strip \
      --ar=${CROSS_PREFIX}ar \
      --as=${CROSS_PREFIX}gcc \
-     --extra-libs=-lgcc"
+     --extra-libs=-lgcc \
+    --disable-programs"
   
     # ANDROID SPECIFIC
     if [ "${ANDROID}" == "1" ]; then
@@ -118,4 +121,24 @@ if [ "${CROSS_COMPILING}" = "1" ]; then
     fi
 fi
 
-./configure ${OPTS} ${FFMPEG_OPTS} --extra-cflags="${CFLAGS}" --extra-cxxflags="${CFLAGS}" --extra-ldflags="${LDFLAGS}"
+EXTRA_OPTS=
+function addOpts {
+    FLAG=${1}
+    VALUE=${2}
+    echo "Adding opt ${FLAG}: \"${VALUE}\""
+    if [ "${VALUE}" != "" ]; then 
+        EXTRA_OPTS="${EXTRA_OPTS} ${FLAG}=\"${VALUE}\""
+    else 
+        echo "Ignoring empty value"
+    fi
+}
+
+addOpts "--extra-cflags" "${CFLAGS}"
+addOpts "--extra-cxxflags" "${CFLAGS}"
+addOpts "--extra-ldflags" "${LDFLAGS}"
+
+echo "EXTRA_OPTS: ${EXTRA_OPTS}"
+echo "ENVIRONMENT FOR CONFIGURE"
+env 
+
+./configure ${OPTS} ${FFMPEG_OPTS} ${EXTRA_OPTS}
