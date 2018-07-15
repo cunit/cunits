@@ -121,24 +121,7 @@ if [ "${CROSS_COMPILING}" = "1" ]; then
     fi
 fi
 
-EXTRA_OPTS=
-function addOpts {
-    FLAG=${1}
-    VALUE=${2}
-    echo "Adding opt ${FLAG}: \"${VALUE}\""
-    if [ "${VALUE}" != "" ]; then 
-        EXTRA_OPTS="${EXTRA_OPTS} ${FLAG}=\"${VALUE}\""
-    else 
-        echo "Ignoring empty value"
-    fi
-}
-
-addOpts "--extra-cflags" "${CFLAGS}"
-addOpts "--extra-cxxflags" "${CFLAGS}"
-addOpts "--extra-ldflags" "${LDFLAGS}"
-
-echo "EXTRA_OPTS: ${EXTRA_OPTS}"
 echo "ENVIRONMENT FOR CONFIGURE"
 env 
 
-./configure ${OPTS} ${FFMPEG_OPTS} ${EXTRA_OPTS}
+./configure ${OPTS} ${FFMPEG_OPTS} --extra-cflags="${CFLAGS}" --extra-cxxflags="${CFLAGS}" --extra-ldflags="${LDFLAGS}"
