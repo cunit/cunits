@@ -106,7 +106,7 @@ if [ "${CROSS_COMPILING}" = "1" ]; then
         ANDROID_PLATFORM_ROOT=${ANDROID_NDK}/platforms/android-${ANDROID_NATIVE_API_LEVEL:-27}/arch-${ANDROID_ARCH}
         ANDROID_PLATFORM_PATH=${ANDROID_SYSTEM_LIBRARY_PATH}
 
-        CFLAGS=" ${CFLAGS} -pie -fPIE -fPIC -I${ANDROID_PLATFORM_ROOT}/ -I${CMAKE_SYSROOT}/usr/include -I${CMAKE_SYSROOT}/usr/include/${ANDROID_HEADER_TRIPLE} -I${ANDROID_PLATFORM_ROOT}/include -DANDROID -Dipv6mr_interface=ipv6mr_ifindex -fasm -Wno-psabi -fno-short-enums"
+        CFLAGS=" ${CFLAGS} -fPIC -I${ANDROID_PLATFORM_ROOT}/ -I${CMAKE_SYSROOT}/usr/include -I${CMAKE_SYSROOT}/usr/include/${ANDROID_HEADER_TRIPLE} -I${ANDROID_PLATFORM_ROOT}/include -DANDROID -Dipv6mr_interface=ipv6mr_ifindex -fasm -Wno-psabi -fno-short-enums"
         EXTRA_LD="-L${ANDROID_PLATFORM_ROOT}/usr/lib64"
         LDFLAGS="${LDFLAGS} -Wl,-rpath-link=${ANDROID_PLATFORM_ROOT}/usr/lib ${EXTRA_LD} -L${ANDROID_PLATFORM_ROOT}/usr/lib  -L${CXXPODS_BUILD_LIB} -nostdlib -lm -lc -ldl"
         
