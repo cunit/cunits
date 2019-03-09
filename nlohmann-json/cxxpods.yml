@@ -1,0 +1,9 @@
+name: nlohmann-json
+repository: 
+  url: https://github.com/nlohmann/json.git
+
+cmake:
+  flags:
+    CMAKE_BUILD_TYPE: Release
+  findTemplate: cmake/FindJSON.cmake.hbs
+    

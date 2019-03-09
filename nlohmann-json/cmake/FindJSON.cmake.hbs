@@ -1,0 +1,7 @@
+
+if (NOT JSON_FOUND) 
+    set(JSON_INCLUDE_DIR {{jsonIncludeDir}})
+    add_library(JSON::JSON STATIC IMPORTED)
+    set_target_properties(JSON::JSON PROPERTIES INCLUDE_DIRECTORIES ${JSON_INCLUDE_DIR})
+    set(JSON_FOUND TRUE)
+endif()
