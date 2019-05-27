@@ -1,0 +1,9 @@
+name: gflags
+repository: 
+  url: https://github.com/gflags/gflags.git
+
+cmake:
+  flags:
+    CMAKE_BUILD_TYPE: Release
+  findTemplate: cmake/Findgflags.cmake.hbs
+    

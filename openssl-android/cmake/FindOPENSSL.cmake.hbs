@@ -1,0 +1,20 @@
+if(NOT OPENSSL_FOUND)
+    #postproc
+    foreach(_openssllib ssl crypto)
+        set(_libname lib${_openssllib})
+        set(_lib {{cxxpodsLibDir}}/${CMAKE_STATIC_LIBRARY_PREFIX}${_openssllib}${CMAKE_STATIC_LIBRARY_SUFFIX})
+        set(_target OPENSSL::${_libname})
+        if(EXISTS ${_lib} AND NOT TARGET ${_target})
+            list(APPEND OPENSSL_LIBRARIES ${_lib})
+            list(APPEND OPENSSL_TARGETS ${_target})
+            message(STATUS "${_libname}: ${_lib}")
+            add_library(${_target} STATIC IMPORTED)
+            set_target_properties(${_target} PROPERTIES IMPORTED_LOCATION ${_lib})
+        endif()
+    endforeach()
+
+    
+    set(OPENSSL_FOUND TRUE)
+endif()
+
+

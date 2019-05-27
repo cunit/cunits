@@ -1,0 +1,12 @@
+name: event
+repository: 
+  url: https://github.com/priteshrnandgaonkar/libevent.git
+
+cmake:
+  flags:
+    EVENT__BUILD_SHARED_LIBRARIES: OFF
+    BUILD_SHARED_LIBS: OFF
+    CMAKE_BUILD_TYPE: Release
+    EVENT__HAVE_WAITPID_WITH_WNOWAIT_EXITCODE: 0
+    EVENT__HAVE_WAITPID_WITH_WNOWAIT_EXITCODE__TRYRUN_OUTPUT: ""
+  findTemplate: cmake/FindLibEvent.cmake.hbs

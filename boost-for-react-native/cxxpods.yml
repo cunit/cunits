@@ -1,0 +1,20 @@
+name: boost-for-react-native
+repository: 
+  url: https://github.com/react-native-community/boost-for-react-native.git
+
+buildType: manual
+build:
+  install:
+    script: |
+      echo "boost root dir"
+      ls -la
+      pwd
+      if [ -e "${CXXPODS_BUILD_INCLUDE}/boost" ]; then
+        rm -Rf "${CXXPODS_BUILD_INCLUDE}/boost"
+      fi
+      cp -R boost ${CXXPODS_BUILD_INCLUDE}/boost
+  
+
+cmake:
+  findTemplate: cmake/FindBoost.cmake.hbs
+

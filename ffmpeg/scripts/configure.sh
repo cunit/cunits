@@ -69,6 +69,10 @@ if [ "${CROSS_COMPILING}" = "1" ]; then
     echo "Cross-Compiling: ${ARCH}"
     echo "SYSROOT=${CMAKE_SYSROOT}"
 
+    if [ "${ARCH}" = "x86" ];then
+        OPTS="${OPTS} --disable-asm"
+    fi
+
     OPTS="${OPTS} \
     --disable-shared \
     --enable-static \
@@ -107,7 +111,9 @@ if [ "${CROSS_COMPILING}" = "1" ]; then
         ANDROID_PLATFORM_PATH=${ANDROID_SYSTEM_LIBRARY_PATH}
 
         CFLAGS=" ${CFLAGS} -fPIC -I${ANDROID_PLATFORM_ROOT}/ -I${CMAKE_SYSROOT}/usr/include -I${CMAKE_SYSROOT}/usr/include/${ANDROID_HEADER_TRIPLE} -I${ANDROID_PLATFORM_ROOT}/include -DANDROID -Dipv6mr_interface=ipv6mr_ifindex -fasm -Wno-psabi -fno-short-enums"
-        EXTRA_LD="-L${ANDROID_PLATFORM_ROOT}/usr/lib64"
+        if [ "${ARCH}" = "aarch64" ];then
+            EXTRA_LD="-L${ANDROID_PLATFORM_ROOT}/usr/lib64"
+        fi
         LDFLAGS="${LDFLAGS} -Wl,-rpath-link=${ANDROID_PLATFORM_ROOT}/usr/lib ${EXTRA_LD} -L${ANDROID_PLATFORM_ROOT}/usr/lib  -L${CXXPODS_BUILD_LIB} -nostdlib -lm -lc -ldl"
         
         echo "Platform path: ${ANDROID_PLATFORM_PATH}"

@@ -1,0 +1,8 @@
+name: double-conversion
+repository: 
+  url: https://github.com/google/double-conversion.git
+
+cmake:
+  flags:
+    BUILD_SHARED_LIBS: OFF
+    CMAKE_BUILD_TYPE: Release

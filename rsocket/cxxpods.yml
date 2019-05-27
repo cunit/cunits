@@ -1,0 +1,33 @@
+name: rsocket
+repository: 
+  url: https://github.com/priteshrnandgaonkar/rsocket-cpp.git
+
+cmake:
+  flags:
+    CMAKE_CXX_FLAGS: -DFOLLY_HAVE_CLOCK_GETTIME=1 \
+      -DFOLLY_HAVE_PTHREAD=1 \
+      -DFOLLY_NO_CONFIG=1 \
+      -DFOLLY_HAVE_MEMRCHR \
+      -DFOLLY_MOBILE=1 \
+      -DFOLLY_USE_LIBCPP=1 \
+      -DFOLLY_HAVE_LIBJEMALLOC=0 \
+      -DFOLLY_HAVE_PREADV=0 \
+      -frtti \
+      -fexceptions \
+      -Wno-error \
+      -Wno-unused-local-typedefs \
+      -Wno-unused-variable \
+      -Wno-sign-compare \
+      -Wno-comment \
+      -Wno-return-type \
+      -Wno-tautological-constant-compare
+    BUILD_SHARED_LIBS: OFF
+    CMAKE_BUILD_TYPE: Release
+
+dependencies:
+  glog: 0.3.5
+  double-conversion: 3.0.0
+  folly: v2018.09.10.00
+  event: 2.1.9
+  openssl-android: 1.1.0h-r2
+    
