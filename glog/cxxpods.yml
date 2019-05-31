@@ -8,5 +8,5 @@ cmake:
     BUILD_SHARED_LIBS: OFF
     CMAKE_BUILD_TYPE: Release
     ANDROID: ON
-  findTemplate: cmake/Findglog.cmake.hbs
+  findTemplate: cmake/FindGLog.cmake.hbs
   

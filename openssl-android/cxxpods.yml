@@ -6,14 +6,33 @@ buildType: manual
 build:
   install: 
     script: |
-      echo "Building libs"
+      echo "ARCH=${ARCH} SYSTEM=${SYSTEM}"
+      if [ "${SYSTEM}" = "IOS" ];then
+        echo "Building for IOS / ${ARCH} / ${CXXPODS_BUILD_DIR}"
+        
+        cd "${CXXPODS_BUILD_DIR}"
+        if [ ! -d "ios" ]; then
+          git clone https://github.com/krzyzanowskim/OpenSSL.git ios
+        fi
+        
+        cd ios
+        ${CXXPODS_DEP_DIR}/scripts/build-ios.sh ${ARCH}
 
+        exit 0
+      fi
+
+      echo "Building libs for android"
       wget https://github.com/passy/openssl-android/releases/download/1.1.0h-r2/openssl-1.1.0h-r2-prebuilt.tar.gz
       tar xvfz openssl-1.1.0h-r2-prebuilt.tar.gz
-      
 
-      set +e
-      set +x
+      wget https://github.com/passy/openssl-android/releases/download/1.1.0h/openssl-1.1.0h.tar.gz
+      tar xvfz openssl-1.1.0h.tar.gz
+      
+      cd openssl-1.1.0h
+      ./Configure dist
+      make build_generated
+      cd ..
+
 
       echo "Getting ABI for ${ARCH}"
       ABI=""
@@ -25,12 +44,12 @@ build:
       esac
 
       echo "Got ABI ${ABI}"
-      cp -R "libs/${ABI}/*.a" "${CXXPODS_BUILD_LIB}/"
+      cp -R libs/${ABI}/*.a "${CXXPODS_BUILD_LIB}/"
 
       if [ -e "${CXXPODS_BUILD_INCLUDE}/openssl" ];then
         rm -Rf "${CXXPODS_BUILD_INCLUDE}/openssl"
       fi
-      cp -R "jni/openssl-android/include/openssl" "${CXXPODS_BUILD_INCLUDE}/openssl"
+      cp -R "openssl-1.1.0h/include/openssl" "${CXXPODS_BUILD_INCLUDE}/openssl"
   # configure:
   #   script: ./Configure --prefix=${CXXPODS_BUILD_ROOT} no-shared dist
   # build:

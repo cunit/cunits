@@ -6,84 +6,93 @@ set(PACKAGE_NAME      folly)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# includes
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake" ${CMAKE_MODULE_PATH})
+# function(auto_sources RETURN_VALUE PATTERN SOURCE_SUBDIRS)
+#   if ("${SOURCE_SUBDIRS}" STREQUAL "RECURSE")
+#     SET(PATH ".")
+#     if (${ARGC} EQUAL 4)
+#       list(GET ARGV 3 PATH)
+#     endif ()
+#   endif()
 
-function(auto_sources RETURN_VALUE PATTERN SOURCE_SUBDIRS)
-  if ("${SOURCE_SUBDIRS}" STREQUAL "RECURSE")
-    SET(PATH ".")
-    if (${ARGC} EQUAL 4)
-      list(GET ARGV 3 PATH)
-    endif ()
-  endif()
+#   if ("${SOURCE_SUBDIRS}" STREQUAL "RECURSE")
+#     unset(${RETURN_VALUE})
+#     file(GLOB SUBDIR_FILES "${PATH}/${PATTERN}")
+#     list(APPEND ${RETURN_VALUE} ${SUBDIR_FILES})
 
-  if ("${SOURCE_SUBDIRS}" STREQUAL "RECURSE")
-    unset(${RETURN_VALUE})
-    file(GLOB SUBDIR_FILES "${PATH}/${PATTERN}")
-    list(APPEND ${RETURN_VALUE} ${SUBDIR_FILES})
+#     file(GLOB subdirs RELATIVE ${PATH} ${PATH}/*)
 
-    file(GLOB subdirs RELATIVE ${PATH} ${PATH}/*)
+#     foreach(DIR ${subdirs})
+#       if (IS_DIRECTORY ${PATH}/${DIR})
+#         if (NOT "${DIR}" STREQUAL "CMakeFiles")
+#           file(GLOB_RECURSE SUBDIR_FILES "${PATH}/${DIR}/${PATTERN}")
+#           list(APPEND ${RETURN_VALUE} ${SUBDIR_FILES})
+#         endif()
+#       endif()
+#     endforeach()
+#   else()
+#     file(GLOB ${RETURN_VALUE} "${PATTERN}")
 
-    foreach(DIR ${subdirs})
-      if (IS_DIRECTORY ${PATH}/${DIR})
-        if (NOT "${DIR}" STREQUAL "CMakeFiles")
-          file(GLOB_RECURSE SUBDIR_FILES "${PATH}/${DIR}/${PATTERN}")
-          list(APPEND ${RETURN_VALUE} ${SUBDIR_FILES})
-        endif()
-      endif()
-    endforeach()
-  else()
-    file(GLOB ${RETURN_VALUE} "${PATTERN}")
+#     foreach (PATH ${SOURCE_SUBDIRS})
+#       file(GLOB SUBDIR_FILES "${PATH}/${PATTERN}")
+#       list(APPEND ${RETURN_VALUE} ${SUBDIR_FILES})
+#     endforeach()
+#   endif ()
 
-    foreach (PATH ${SOURCE_SUBDIRS})
-      file(GLOB SUBDIR_FILES "${PATH}/${PATTERN}")
-      list(APPEND ${RETURN_VALUE} ${SUBDIR_FILES})
-    endforeach()
-  endif ()
+#   set(${RETURN_VALUE} ${${RETURN_VALUE}} PARENT_SCOPE)
+# endfunction(auto_sources)
 
-  set(${RETURN_VALUE} ${${RETURN_VALUE}} PARENT_SCOPE)
-endfunction(auto_sources)
+# function(REMOVE_MATCHES_FROM_LISTS)
+#   set(LISTS_TO_SEARCH)
+#   set(MATCHES_TO_REMOVE)
+#   set(MATCHES_TO_IGNORE)
+#   set(argumentState 0)
+#   foreach (arg ${ARGN})
+#     if ("x${arg}" STREQUAL "xMATCHES")
+#       set(argumentState 1)
+#     elseif ("x${arg}" STREQUAL "xIGNORE_MATCHES")
+#       set(argumentState 2)
+#     elseif (argumentState EQUAL 0)
+#       list(APPEND LISTS_TO_SEARCH ${arg})
+#     elseif (argumentState EQUAL 1)
+#       list(APPEND MATCHES_TO_REMOVE ${arg})
+#     elseif (argumentState EQUAL 2)
+#       list(APPEND MATCHES_TO_IGNORE ${arg})
+#     else()
+#       message(FATAL_ERROR "Unknown argument state!")
+#     endif()
+#   endforeach()
 
-function(REMOVE_MATCHES_FROM_LISTS)
-  set(LISTS_TO_SEARCH)
-  set(MATCHES_TO_REMOVE)
-  set(MATCHES_TO_IGNORE)
-  set(argumentState 0)
-  foreach (arg ${ARGN})
-    if ("x${arg}" STREQUAL "xMATCHES")
-      set(argumentState 1)
-    elseif ("x${arg}" STREQUAL "xIGNORE_MATCHES")
-      set(argumentState 2)
-    elseif (argumentState EQUAL 0)
-      list(APPEND LISTS_TO_SEARCH ${arg})
-    elseif (argumentState EQUAL 1)
-      list(APPEND MATCHES_TO_REMOVE ${arg})
-    elseif (argumentState EQUAL 2)
-      list(APPEND MATCHES_TO_IGNORE ${arg})
-    else()
-      message(FATAL_ERROR "Unknown argument state!")
-    endif()
-  endforeach()
+#   foreach (theList ${LISTS_TO_SEARCH})
+#     foreach (entry ${${theList}})
+#       foreach (match ${MATCHES_TO_REMOVE})
+#         if (${entry} MATCHES ${match})
+#           set(SHOULD_IGNORE OFF)
+#           foreach (ign ${MATCHES_TO_IGNORE})
+#             if (${entry} MATCHES ${ign})
+#               set(SHOULD_IGNORE ON)
+#               break()
+#             endif()
+#           endforeach()
 
-  foreach (theList ${LISTS_TO_SEARCH})
-    foreach (entry ${${theList}})
-      foreach (match ${MATCHES_TO_REMOVE})
-        if (${entry} MATCHES ${match})
-          set(SHOULD_IGNORE OFF)
-          foreach (ign ${MATCHES_TO_IGNORE})
-            if (${entry} MATCHES ${ign})
-              set(SHOULD_IGNORE ON)
-              break()
-            endif()
-          endforeach()
+#           if (NOT SHOULD_IGNORE)
+#             list(REMOVE_ITEM ${theList} ${entry})
+#           endif()
+#         endif()
+#       endforeach()
+#     endforeach()
+#     set(${theList} ${${theList}} PARENT_SCOPE)
+#   endforeach()
+# endfunction()
 
-          if (NOT SHOULD_IGNORE)
-            list(REMOVE_ITEM ${theList} ${entry})
-          endif()
-        endif()
-      endforeach()
-    endforeach()
-    set(${theList} ${${theList}} PARENT_SCOPE)
-  endforeach()
-endfunction()
+include(FollyFunctions)
+
+include(FollyConfigChecks)
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/CMake/folly-config.h.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/folly/folly-config.h
+)
 
 # set(ROOT_DIR ${CMAKE_CURRENT_LIST_DIR}/../../../..)
 # include(${ROOT_DIR}/cmake/setup.cmake)
@@ -108,15 +117,20 @@ include_directories(
   ${dir_list}
 )
 
+set(FLAGS "")
+if(ANDROID)
+  set(FLAGS "-DFOLLY_HAVE_MEMRCHR")
+endif()
+
 add_compile_options(
   -DFOLLY_HAVE_CLOCK_GETTIME=1
   -DFOLLY_HAVE_PTHREAD=1
   -DFOLLY_NO_CONFIG=1
-  -DFOLLY_HAVE_MEMRCHR
   -DFOLLY_MOBILE=1
   -DFOLLY_USE_LIBCPP=1
   -DFOLLY_HAVE_LIBJEMALLOC=0
   -DFOLLY_HAVE_PREADV=0
+  ${FLAGS}
   -frtti
   -fexceptions
   -Wno-error
@@ -237,6 +251,9 @@ REMOVE_MATCHES_FROM_LISTS(files hfiles
     "Test.cpp$"
 )
 
+list(APPEND hfiles
+${CMAKE_CURRENT_BINARY_DIR}/folly/folly-config.h
+)
 list(REMOVE_ITEM hfiles
   ${FOLLY_DIR}/detail/SlowFingerprint.h
   ${FOLLY_DIR}/detail/FingerprintPolynomial.h
@@ -295,7 +312,7 @@ install (TARGETS ${PACKAGE_NAME}
   ARCHIVE DESTINATION lib
 )
 install(DIRECTORY folly DESTINATION include FILES_MATCHING PATTERN "*.h")
-#install(FILES ${hfiles} DESTINATION include/folly)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/folly/folly-config.h DESTINATION include/folly)
 
 # install(
 #   FILES ${CMAKE_CURRENT_BINARY_DIR}/folly/folly-config.h

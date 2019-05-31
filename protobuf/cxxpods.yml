@@ -18,4 +18,11 @@ cmake:
   findTemplate: cmake/FindProtobuf.cmake.hbs
   toolTemplate: cmake/FindToolProtobuf.cmake.hbs
 
-  
+systems:
+  ios:
+    cmake:
+      flags:
+        # CMAKE_STATIC_LINKER_FLAGS: -mmacosx-version-min=10.7
+        # CMAKE_SHARED_LINKER_FLAGS: -mmacosx-version-min=10.7
+        # CMAKE_EXE_LINKER_FLAGS: -mmacosx-version-min=10.7
+        #CMAKE_OSX_DEPLOYMENT_TARGET: "10.00" 

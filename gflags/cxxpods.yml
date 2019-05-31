@@ -4,6 +4,7 @@ repository:
 
 cmake:
   flags:
+    BUILD_SHARED_LIBS: OFF
     CMAKE_BUILD_TYPE: Release
-  findTemplate: cmake/Findgflags.cmake.hbs
+  findTemplate: cmake/FindGFlags.cmake.hbs
     

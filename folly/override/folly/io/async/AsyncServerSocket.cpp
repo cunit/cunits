@@ -830,11 +830,11 @@ void AsyncServerSocket::handlerReady(uint16_t /* events */,
     }
 
     // Accept a new client socket
-#ifdef SOCK_NONBLOCK
-//     int clientSocket = accept4(fd, saddr, &addrLen, SOCK_NONBLOCK);
+// #ifdef SOCK_NONBLOCK
+    // int clientSocket = accept(fd, saddr, &addrLen, SOCK_NONBLOCK);
 // #else
     int clientSocket = accept(fd, saddr, &addrLen);
-#endif
+// #endif
 
     address.setFromSockaddr(saddr, addrLen);
 
@@ -890,18 +890,18 @@ void AsyncServerSocket::handlerReady(uint16_t /* events */,
       return;
     }
 
-#ifndef SOCK_NONBLOCK
-    // Explicitly set the new connection to non-blocking mode
-    if (fcntl(clientSocket, F_SETFL, O_NONBLOCK) != 0) {
-      closeNoInt(clientSocket);
-      dispatchError("failed to set accepted socket to non-blocking mode",
-                    errno);
-      if (connectionEventCallback_) {
-        connectionEventCallback_->onConnectionDropped(clientSocket, address);
-      }
-      return;
-    }
-#endif
+//  #ifndef SOCK_NONBLOCK
+//     // Explicitly set the new connection to non-blocking mode
+//     if (fcntl(clientSocket, F_SETFL, O_NONBLOCK) != 0) {
+//       closeNoInt(clientSocket);
+//       dispatchError("failed to set accepted socket to non-blocking mode",
+//                     errno);
+//       if (connectionEventCallback_) {
+//         connectionEventCallback_->onConnectionDropped(clientSocket, address);
+//       }
+//       return;
+//     }
+// #endif
 
     // Inform the callback about the new connection
     dispatchSocket(clientSocket, std::move(address));

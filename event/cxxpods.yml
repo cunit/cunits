@@ -5,8 +5,17 @@ repository:
 cmake:
   flags:
     EVENT__BUILD_SHARED_LIBRARIES: OFF
+    EVENT__HAVE_PIPE2: OFF
     BUILD_SHARED_LIBS: OFF
     CMAKE_BUILD_TYPE: Release
     EVENT__HAVE_WAITPID_WITH_WNOWAIT_EXITCODE: 0
     EVENT__HAVE_WAITPID_WITH_WNOWAIT_EXITCODE__TRYRUN_OUTPUT: ""
   findTemplate: cmake/FindLibEvent.cmake.hbs
+
+systems:
+  ios: 
+    cmake:
+      flags:
+        #EVENT__HAVE_POLL_H: NO
+        EVENT__HAVE_SYS_EPOLL_H: NO
+        EVENT__HAVE_EPOLL: NO
