@@ -6,11 +6,22 @@ buildType: manual
 build:
   install: 
     script: |
+      cd "${CXXPODS_BUILD_DIR}"
       echo "ARCH=${ARCH} SYSTEM=${SYSTEM}"
-      if [ "${SYSTEM}" = "IOS" ];then
+      if [ "${SYSTEM}" = "Darwin" ]; then
+        echo "Building for "Darwin" / ${ARCH} / ${CXXPODS_BUILD_DIR}"
+          
+        if [ ! -d "darwin" ]; then
+          git clone https://github.com/krzyzanowskim/OpenSSL.git ios
+        fi
+          
+        cd darwin
+        ${CXXPODS_DEP_DIR}/scripts/build-macos.sh
+
+        exit 0
+      elif [ "${SYSTEM}" = "IOS" ];then
         echo "Building for IOS / ${ARCH} / ${CXXPODS_BUILD_DIR}"
-        
-        cd "${CXXPODS_BUILD_DIR}"
+
         if [ ! -d "ios" ]; then
           git clone https://github.com/krzyzanowskim/OpenSSL.git ios
         fi

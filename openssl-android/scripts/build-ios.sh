@@ -8,7 +8,7 @@ set -x
 
 export PATH="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:$PATH"
 
-cd ${CXXPODS_DEP_DIR}
+cd "${CXXPODS_BUILD_DIR}"
 BASE_PWD="$PWD"
 SCRIPT_DIR="$PWD" #cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
@@ -48,13 +48,13 @@ configure() {
    export CROSS_SDK="${OS}${SDK_VERSION}.sdk"
 
    TARGET=""
-   COMPILER_ARGS="no-shared no-dso no-hw no-engine"
-   FIX="=-mios-simulator-version-min=${DEPLOYMENT_VERSION} -miphoneos-version-min=${DEPLOYMENT_VERSION} !" 
+   COMPILER_ARGS="no-shared"
+   #FIX="=-mios-simulator-version-min=${DEPLOYMENT_VERSION} -miphoneos-version-min=${DEPLOYMENT_VERSION} !" 
    case "${ARCH}" in
    x86_64)
-      COMPILER_ARGS="enable-ec_nistp_64_gcc_128 no-ssl2 no-ssl3 no-com"
+      #COMPILER_ARGS="enable-ec_nistp_64_gcc_128 no-ssl2 no-ssl3 no-com"
       TARGET=darwin64-x86_64-c
-      FIX="=-isysroot ${CROSS_TOP}/SDKs/${CROSS_SDK} -arch $ARCH -mios-simulator-version-min=${DEPLOYMENT_VERSION} -miphoneos-version-min=${DEPLOYMENT_VERSION} !" 
+      #FIX="=-isysroot ${CROSS_TOP}/SDKs/${CROSS_SDK} -arch $ARCH -mios-simulator-version-min=${DEPLOYMENT_VERSION} -miphoneos-version-min=${DEPLOYMENT_VERSION} !" 
       ;;
    arm64) TARGET=ios64-cross ;;
    armv7*) TARGET=ios-cross ;;
@@ -66,9 +66,9 @@ configure() {
 
    ${SRC_DIR}/Configure ${TARGET} ${COMPILER_ARGS} --prefix="${CXXPODS_BUILD_ROOT}" &>"${BUILD_DIR}/${OPENSSL_VERSION}-${ARCH}.log"
 
-   for arg in "CFLAG" "CFLAGS"; do
-      sed -ie "s!^${arg}=!${arg}${FIX}" "${SRC_DIR}/Makefile"
-   done
+   # for arg in "CFLAG" "CFLAGS"; do
+   #    sed -ie "s!^${arg}=!${arg}${FIX}" "${SRC_DIR}/Makefile"
+   # done
 
    if [ "$ARCH" != "x86_64" ]; then
       perl -i -pe 's|static volatile sig_atomic_t intr_signal|static volatile int intr_signal|' ${SRC_DIR}/crypto/ui/ui_openssl.c
@@ -89,13 +89,14 @@ build() {
    echo "Building for ${SDK##*/} ${ARCH} in ${SRC_DIR} with base ${BUILD_DIR}"
 
    export BUILD_TOOLS="${DEVELOPER}"
-   export CC=clang #"${BUILD_TOOLS}/usr/bin/gcc -fembed-bitcode -arch ${ARCH}"
+   # export CC=clang #
+   export CC="${BUILD_TOOLS}/usr/bin/gcc -fembed-bitcode -arch ${ARCH}"
 
    # Change dir
    cd "${SRC_DIR}"
 
    # fix headers for Swift
-   #sed -ie "s/BIGNUM \*I,/BIGNUM \*i,/g" ${SRC_DIR}/crypto/rsa/rsa.h
+   sed -ie "s/BIGNUM \*I,/BIGNUM \*i,/g" ${SRC_DIR}/include/openssl/rsa.h
 
    case "$TYPE" in
    # IOS
@@ -110,8 +111,8 @@ build() {
    macos)
       if [ "$ARCH" == "x86_64" ]; then
          ${SRC_DIR}/Configure darwin64-x86_64-cc --prefix="${BUILD_DIR}/${OPENSSL_VERSION}-${ARCH}" &>"${BUILD_DIR}/${OPENSSL_VERSION}-${ARCH}.log"
-         sed -ie "s!^CFLAG=!CFLAG=-isysroot ${SDK} -arch $ARCH -mmacosx-version-min=${OSX_DEPLOYMENT_VERSION} !" "${SRC_DIR}/Makefile"
-         sed -ie "s!^CFLAGS=!CFLAGS=-isysroot ${SDK} -arch $ARCH -mmacosx-version-min=${OSX_DEPLOYMENT_VERSION} !" "${SRC_DIR}/Makefile"
+         # sed -ie "s!^CFLAG=!CFLAG=-isysroot ${SDK} -arch $ARCH -mmacosx-version-min=${OSX_DEPLOYMENT_VERSION} !" "${SRC_DIR}/Makefile"
+         # sed -ie "s!^CFLAGS=!CFLAGS=-isysroot ${SDK} -arch $ARCH -mmacosx-version-min=${OSX_DEPLOYMENT_VERSION} !" "${SRC_DIR}/Makefile"
       fi
       ;;
    esac
@@ -133,7 +134,7 @@ build() {
 
    # mv ${BUILD_DIR}/${OPENSSL_VERSION}-${ARCH}/include/openssl/opensslconf.h ${BUILD_DIR}/${OPENSSL_VERSION}-${ARCH}/include/openssl/opensslconf-${ARCH}.h
 
-   rm -rf "${SRC_DIR}"
+   #rm -rf "${SRC_DIR}"
 }
 
 # generate_opensslconfh() {
@@ -202,7 +203,7 @@ build_ios() {
    # done
    #generate_opensslconfh "${CXXPODS_BUILD_INCLUDE}/openssl/opensslconf.h" #${SCRIPT_DIR}/ios/include/openssl/opensslconf.h
 
-   rm -rf ${BUILD_DIR}
+   # rm -rf ${BUILD_DIR}
 }
 
 # build_macos() {
