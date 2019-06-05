@@ -38,7 +38,7 @@ configure() {
 
    echo "Configuring for macOS"
 
-   TARGET=darwin64-x86_64-c
+   TARGET=darwin64-x86_64-cc
    COMPILER_ARGS="no-shared"
    
    ${SRC_DIR}/Configure ${TARGET} ${COMPILER_ARGS} --prefix="${CXXPODS_BUILD_ROOT}" &>"${BUILD_DIR}/${OPENSSL_VERSION}-${ARCH}.log"
@@ -62,8 +62,8 @@ build() {
    echo "Building for ${SDK##*/} ${ARCH} in ${SRC_DIR} with base ${BUILD_DIR}"
 
    export BUILD_TOOLS="${DEVELOPER}"
-   export CC=clang #
-   #export CC="${BUILD_TOOLS}/usr/bin/gcc -fembed-bitcode -arch ${ARCH}"
+   # export CC=clang #
+   export CC="${BUILD_TOOLS}/usr/bin/gcc -fembed-bitcode"
 
    # Change dir
    cd "${SRC_DIR}"
@@ -72,7 +72,7 @@ build() {
    sed -ie "s/BIGNUM \*I,/BIGNUM \*i,/g" ${SRC_DIR}/include/openssl/rsa.h
 
 
-   configure "macos" ${BUILD_DIR} ${SRC_DIR}
+   configure ${BUILD_DIR} ${SRC_DIR}
    LOG_PATH="${BUILD_DIR}/${OPENSSL_VERSION}-${ARCH}.log"
    echo "Building ${LOG_PATH}"
    make -j${CXXPODS_PROC_COUNT} &>${LOG_PATH}

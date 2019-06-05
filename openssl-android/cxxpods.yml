@@ -12,7 +12,7 @@ build:
         echo "Building for "Darwin" / ${ARCH} / ${CXXPODS_BUILD_DIR}"
           
         if [ ! -d "darwin" ]; then
-          git clone https://github.com/krzyzanowskim/OpenSSL.git ios
+          git clone https://github.com/krzyzanowskim/OpenSSL.git darwin
         fi
           
         cd darwin
